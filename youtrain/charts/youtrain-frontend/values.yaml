@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: us.gcr.io/playground-277208/gcf/youtrain
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 youtrainApi:
   protocol: "http"
