@@ -1,0 +1,5 @@
+architecture: replication
+secondary:
+  replicaCount: 2
+auth:
+  database: ta_youtrain

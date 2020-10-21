@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "youtrain.fullname" . }}
+  name: {{ include "youtrain-frontend.fullname" . }}
   labels:
-    {{- include "youtrain.labels" . | nindent 4 }}
+    {{- include "youtrain-frontend.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "youtrain.selectorLabels" . | nindent 6 }}
+      {{- include "youtrain-frontend.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "youtrain.selectorLabels" . | nindent 8 }}
+        {{- include "youtrain-frontend.selectorLabels" . | nindent 8 }}
     spec:
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-      serviceAccountName: {{ include "youtrain.serviceAccountName" . }}
+      serviceAccountName: {{ include "youtrain-frontend.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -28,26 +28,23 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: SPRING_DATASOURCE_URL
-              value: {{ .Values.datasource.url }}
-            - name: SPRING_DATASOURCE_USERNAME
-              value: {{ .Values.datasource.username }}
-            - name: SPRING_DATASOURCE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.datasource.passwordSecret.name }}
-                  key: {{ .Values.datasource.passwordSecret.key }}
+            - name: YOUTRAIN_API_PROTOCOL
+              value: {{ .Values.youtrainApi.protocol | quote }}
+            - name: YOUTRAIN_API_HOST
+              value: {{ .Values.youtrainApi.host | quote }}
+            - name: YOUTRAIN_API_PORT
+              value: {{ .Values.youtrainApi.port | quote }}
           ports:
             - name: http
-              containerPort: 8080
+              containerPort: 80
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /courses 
+              path: /
               port: http
           readinessProbe:
             httpGet:
-              path: /courses
+              path: /
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

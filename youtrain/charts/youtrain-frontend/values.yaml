@@ -1,12 +1,17 @@
-# Default values for youtrain.
+# Default values for youtrain-frontend.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: us.gcr.io/playground-277208/gcf/youtrain-server
-  pullPolicy: Always
+  repository: us.gcr.io/playground-277208/gcf/youtrain
+  pullPolicy: IfNotPresent
+
+youtrainApi:
+  protocol: "http"
+  host: "youtrain"
+  port: "80"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -31,25 +36,17 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: ClusterIP
+  type: LoadBalancer
   port: 80
-
-datasource:
-  url: "jdbc:mysql://mariadb-primary.default.svc.cluster.local:3306/ta_youtrain"
-  username: root
-  passwordSecret:
-    name: mariadb
-    key: mariadb-root-password
 
 ingress:
   enabled: false
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
-    #kubernetes.io/ingress.class: nginx
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: youtrain.local
-      paths: ["/api/(/|$)(.*)"]
+    - host: chart-example.local
+      paths: []
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
