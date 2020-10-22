@@ -8,7 +8,7 @@ by [Tim](https://github.com/tmstff) and [Volker](https://github.com/saltyblu)
 
 [Helm](https://helm.sh/docs) serves for two main purposes:
 
-* package management for kubernetes (pls isntall postgres)
+* package management for kubernetes (e.g. please install postgres)
 * templating for kubernetes yamls
 
 ### Package Management Example: Maria DB
