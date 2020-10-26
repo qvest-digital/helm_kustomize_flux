@@ -1,0 +1,7 @@
+---
+commonLabels:
+  app: youtrain
+bases:
+  - ./youtrain-frontend
+  - ./youtrain-backend
+  - ./mariadb
