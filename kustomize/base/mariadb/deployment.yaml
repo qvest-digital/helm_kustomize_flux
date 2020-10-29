@@ -1,0 +1,31 @@
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: mariadb
+spec:
+  selector:
+    matchLabels:
+      app: mariadb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mariadb
+    spec:
+      containers:
+      - image: mariadb:latest
+        name: youtrain-db
+        env:
+          # Use secret in real usage
+        - name: MYSQL_ROOT_PASSWORD
+          value: supersecure
+        - name: MYSQL_DATABASE
+          value: youtrain
+        - name: MYSQL_USER
+          value: youtrain
+        - name: MYSQL_PASSWORD
+          value: youtrain
+        ports:
+        - containerPort: 3306
+          name: mariadb

@@ -1,0 +1,29 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: youtrain-frontend
+spec:
+  selector:
+    matchLabels:
+      app: youtrain-frontend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: youtrain-frontend
+    spec:
+      containers:
+        - name: youtrain-frontend
+          image: "us.gcr.io/playground-277208/gcf/youtrain:latest"
+          env:
+            - name: YOUTRAIN_API_HOST
+              value: youtrain.default.svc.cluster.local
+            - name: YOUTRAIN_API_PROTOCOL
+              value: http
+            - name: YOUTRAIN_API_PORT
+              value: "8080"
+          ports:
+            - containerPort: 80
+              name: http

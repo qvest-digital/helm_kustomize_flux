@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: youtrain-backend
+spec:
+  selector:
+    matchLabels:
+      app: youtrain-backend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: youtrain-backend
+    spec:
+      containers:
+      - name: youtrain-server
+        image: "us.gcr.io/playground-277208/gcf/youtrain-server:latest"
+        env:
+        - name: SPRING_DATASOURCE_URL
+          value: jdbc:mysql://mariadb.default.svc.cluster.local:3306/youtrain
+        - name: SPRING_DATASOURCE_USERNAME
+          value: youtrain
+        - name: SPRING_DATASOURCE_PASSWORD
+          value: youtrain
+        ports:
+        - containerPort: 8080
+          name: http

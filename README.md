@@ -26,7 +26,7 @@ helm uninstall mdb
 helm ls
 
 # optional
-kubectl create namespace mariadb 
+kubectl create namespace mariadb
 
 helm install mariadb bitnami/mariadb --set architecture=replication,secondary.replicaCount=2,auth.database=ta_youtrain
 helm install mariadb bitnami/mariadb -f values.yaml
@@ -36,7 +36,7 @@ helm install mariadb bitnami/mariadb -f values.yaml
 
 Example application:
 
-* frontend: [https://gitlab.com/tarent/youtrain](https://gitlab.com/tarent/youtrain) 
+* frontend: [https://gitlab.com/tarent/youtrain](https://gitlab.com/tarent/youtrain)
     * Docker image: us.gcr.io/playground-277208/gcf/youtrain
 * backend: [https://gitlab.com/tarent/youtrain-server](https://gitlab.com/tarent/youtrain-server)
     * Docker image: us.gcr.io/playground-277208/gcf/youtrain-server
@@ -55,3 +55,23 @@ helm install youtrain ./youtrain --dry-run --debug
 ### HELM Tiller
 
 Older construct using a kubernetes pod for mainiting release information and applying patches and changes to resources. [Obsolete as per Helm 3](https://www.heise.de/developer/meldung/Kubernetes-Paketmanager-Helm-3-verzichtet-auf-Tiller-4586105.html).
+
+## [Kustomize](https://kustomize.io/)
+
+### Overview
+- Purely declarative approach to configuration customization
+- Natively built into kubectl
+- Manage an arbitrary number of distinctly customized Kubernetes configurations
+- Available as a standalone binary for extension and integration into other services
+- Every artifact that kustomize uses is plain YAML and can be validated and processed as such
+- Kustomize encourages a fork/modify/rebase workflow
+
+### Install kustomize (standalone)
+
+https://kubernetes-sigs.github.io/kustomize/installation/
+
+### Deployment
+```
+kubectl apply -k <directory>
+kustomize build <directory>
+```
