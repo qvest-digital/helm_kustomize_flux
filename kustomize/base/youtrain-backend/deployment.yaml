@@ -14,7 +14,7 @@ spec:
         app: youtrain-backend
     spec:
       containers:
-      - name: youtrain-server
+      - name: youtrain
         image: "us.gcr.io/playground-277208/gcf/youtrain-server:latest"
         env:
         - name: SPRING_DATASOURCE_URL
