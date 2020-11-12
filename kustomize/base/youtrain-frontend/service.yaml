@@ -8,4 +8,4 @@ spec:
     - port: 80
   selector:
     app: youtrain-frontend
-  type: loadbalancer
+  type: LoadBalancer
